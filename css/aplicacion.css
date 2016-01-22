@@ -1,0 +1,7 @@
+div.row.respuestas {
+  margin-bottom: 0.1rem;
+}
+
+div.row.respuestas > .col > .card {
+  margin: 0.3rem 0 0.3rem 0;
+}
