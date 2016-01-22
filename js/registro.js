@@ -2,7 +2,7 @@
  * Se encarga de autenticar al usuario
  */
 (function($) {
-    var url = 'http://preguntasrespuestas-yeicores72.rhcloud.com/api/usuarios/autenticar';
+    var url = 'http://preguntasrespuestas-yeicores72.rhcloud.com/api/usuarios';
     $('#contenerdor-formulario').on('submit', '#enviar-formulario', function() {
         var credenciales = JSON.stringify({
             "login": $('#login').val(),
@@ -18,15 +18,8 @@
                 withCredentials: true
             },
             success: function(data, status, jqXHR) {
-                var redirect = localStorage.getItem('frontendPRRedirect');
-                localStorage.setItem('frontendPRSession', 1);
-                localStorage.setItem('frontendPRnotificacion', 'Bienvenido');
-                if (redirect) {
-                    localStorage.removeItem('frontendPRRedirect');
-                    window.location = redirect;
-                } else {
-                    window.location = 'listar-preguntas.html';
-                }
+                localStorage.setItem('frontendPRnotificacion', 'Se ha registrado exitosamente');
+                window.location = 'login.html';
             },
             error: function(data, status, jqXHR) {
                 Materialize.toast(JSON.parse(data.responseText).error, 3000, 'rounded');
