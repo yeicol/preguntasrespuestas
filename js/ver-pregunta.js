@@ -18,16 +18,24 @@
                     withCredentials: true
                 },
                 success: function(data) {
-                    html = '<div class="row">' +
-                        '       <div class="col s12">' +
-                        '           <div class="card grey lighten-4">' +
-                        '               <div class="card-content grey-text text-darken-2">' +
-                        '                   <p>' + data.pregunta.contenido + '</p>' +
-                        '               </div>' +
+                    var html = '<div class="row">' +
+                        '           <div class="col s12">' +
+                        '              <h4 class="orange-text">Ejemplo de título de pregunta</h4>' +
+                        '              <div class="divider"></div>' +
+                        '              <div class="section">' +
+                        '                  <p>' + data.pregunta.contenido + '</p>' +
+                        '              </div>' +
+                        '              <div class="row">' +
+                        '                  <div class="col s7 offset-s5 m6 offset-m6 l5 offset-l7">' +
+                        '                      <div class="card grey lighten-3">' +
+                        '                          <div class="card-content">' +
+                        '                              <span class="datos-pregunta">Preguntado cerca de Pereira</span>' +
+                        '                          </div>' +
+                        '                      </div>' +
+                        '                  </div>' +
+                        '              </div>' +
                         '           </div>' +
-                        '       </div>' +
-                        '     </div>' +
-                        '     <h4>Respuestas</h4>';
+                        '       </div>';
                     $contenidoPregunta.append(html);
                     obtenerRespuestas();
 
@@ -48,20 +56,22 @@
                 withCredentials: true
             },
             success: function(data) {
-                $.each(data.respuestas, function(posicion, respuesta) {
-                    html = '<div class="row respuestas">' +
-                        '       <div class="col s12">' +
-                        '           <div class="card grey lighten-5">' +
-                        '               <div class="card-content grey-text text-darken-2">' +
-                        '                   <p>' + respuesta.contenido + '</p>' +
-                        '               </div>' +
-                        '           </div>' +
-                        '        </div>' +
-                        '     </div>';
-                    $contenidoPregunta.append(html);
-                });
+                var frontendPRSession = parseInt(localStorage.getItem('frontendPRSession'), 10);
+                var cantidadRespuestas = data.respuestas.length;
+                var multiplicidad = (cantidadRespuestas === 1) ? 'respuesta' : 'respuestas';
+                var html = '<h5>' + cantidadRespuestas + ' ' +  multiplicidad + '</h5>' +
+                            '<div class="divider"></div>';
+                    $.each(data.respuestas, function(posicion, respuesta) {
+                        var usuarioRespuestaId = parseInt(respuesta.usuario_id);
+                        var removerRespuesta = (frontendPRSession === usuarioRespuestaId) ? '<a href="eliminar-respuesta.html" class="secondary-content red-text"><i class="material-icons mdi-action-delete"></i></a>' : '';
+                        html +=
+                            '<div class="section respuesta"><p>' + respuesta.contenido + removerRespuesta + '</p></div>';
+                    });
+                    html+='<br>';
+
+                $contenidoPregunta.append(html);
                 if (localStorage.getItem('frontendPRSession')) {
-                    $contenidoPregunta.append($("<div>").load('responder-pregunta.html', responderPregunta));
+                    $contenidoPregunta.append($('<div class="section">').load('templates/responder-pregunta.html', responderPregunta));
                 } else {
                     localStorage.setItem('frontendPRRedirect', 'ver-pregunta.html');
                     $contenidoPregunta.append('<a href="login.html" class="btn-large waves-effect waves-light light-blue darken-1">Debes iniciar sessión para dar un respuesta</a>');

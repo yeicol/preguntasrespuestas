@@ -1,7 +1,20 @@
-div.row.respuestas {
-  margin-bottom: 0.1rem;
+/*.respuestas {
+    margin-bottom: 0.1rem;
 }
+.respuestas > .col > .card {
+    margin: 0.3rem 0 0.3rem 0;
+}*/
 
-div.row.respuestas > .col > .card {
-  margin: 0.3rem 0 0.3rem 0;
+.background-claro {
+    background-color: #F9F9F9;
+}
+.respuesta {
+    background-color: #F5F5F5;
+    margin: 1rem 0;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+.datos-pregunta {
+    font-size: 0.9rem;
+    font-weight: 400;
 }
