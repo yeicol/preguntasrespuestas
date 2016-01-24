@@ -1,7 +1,7 @@
 /**
  * Se encarga de autenticar al usuario
  */
-(function($) {
+(function( $ ) {
     var url = 'http://preguntasrespuestas-yeicores72.rhcloud.com/api/usuarios/autenticar';
     $('#contenerdor-formulario').on('submit', '#enviar-formulario', function() {
         var credenciales = JSON.stringify({
@@ -19,7 +19,7 @@
             },
             success: function(data, status, jqXHR) {
                 var redirect = localStorage.getItem('frontendPRRedirect');
-                localStorage.setItem('frontendPRSession', 1);
+                localStorage.setItem('frontendPRSession', data.usuario.id);
                 localStorage.setItem('frontendPRnotificacion', 'Bienvenido');
                 if (redirect) {
                     localStorage.removeItem('frontendPRRedirect');
