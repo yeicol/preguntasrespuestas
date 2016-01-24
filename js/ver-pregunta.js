@@ -4,14 +4,14 @@
 (function($) {
     var urlBase = 'http://preguntasrespuestas-yeicores72.rhcloud.com/api/preguntas/';
     var tipoElementoGuardado = window.localStorage.frontendPRTipo;
-    var idElementoGuardado = window.localStorage.frontendPRid;
+    var idPregunta = window.localStorage.frontendPRid;
     var $contenidoPregunta = $("#contenido-pregunta");
     obtenerPregunta();
 
     function obtenerPregunta() {
-        if ('pregunta' === tipoElementoGuardado && idElementoGuardado) {
+        if ('pregunta' === tipoElementoGuardado && idPregunta) {
             $.ajax({
-                url: urlBase + idElementoGuardado,
+                url: urlBase + idPregunta,
                 type: 'GET',
                 dataType: 'json',
                 xhrFields: {
@@ -49,7 +49,7 @@
 
     function obtenerRespuestas() {
         $.ajax({
-            url: urlBase + idElementoGuardado + '/respuestas',
+            url: urlBase + idPregunta + '/respuestas',
             type: 'GET',
             dataType: 'json',
             xhrFields: {
@@ -58,17 +58,30 @@
             success: function(data) {
                 var frontendPRSession = parseInt(localStorage.getItem('frontendPRSession'), 10);
                 var cantidadRespuestas = data.respuestas.length;
+                var iniciarModal = false;
                 var multiplicidad = (cantidadRespuestas === 1) ? 'respuesta' : 'respuestas';
-                var html = '<h5>' + cantidadRespuestas + ' ' +  multiplicidad + '</h5>' +
-                            '<div class="divider"></div>';
-                    $.each(data.respuestas, function(posicion, respuesta) {
-                        var usuarioRespuestaId = parseInt(respuesta.usuario_id);
-                        var removerRespuesta = (frontendPRSession === usuarioRespuestaId) ? '<a href="eliminar-respuesta.html" class="secondary-content red-text"><i class="material-icons mdi-action-delete"></i></a>' : '';
-                        html +=
-                            '<div class="section respuesta"><p>' + respuesta.contenido + removerRespuesta + '</p></div>';
-                    });
-                    html+='<br>';
-
+                var html = '<h5>' + cantidadRespuestas + ' ' + multiplicidad + '</h5>' +
+                    '<div class="divider"></div>';
+                $.each(data.respuestas, function(posicion, respuesta) {
+                    var usuarioRespuestaId = parseInt(respuesta.usuario_id);
+                    if (frontendPRSession === usuarioRespuestaId) {
+                        html += '<div class="section respuesta">' +
+                            '       <p>' + respuesta.contenido +
+                            '           <a href="#modal" data-target="#modal" data-id="' + respuesta.id + '" class="secondary-content red-text eliminar-respuesta-modal modal-trigger"><i class="material-icons mdi-action-delete"></i></a>' +
+                            '       </p>' +
+                            '    </div>';
+                        iniciarModal = true;
+                    } else {
+                        html += '<div class="section respuesta">' +
+                            '       <p>' + respuesta.contenido + '</p>' +
+                            '   </div>';
+                    }
+                });
+                html += '<br>';
+                eliminarRespuesta();
+                if (iniciarModal) {
+                    configurarModal();
+                }
                 $contenidoPregunta.append(html);
                 if (localStorage.getItem('frontendPRSession')) {
                     $contenidoPregunta.append($('<div class="section">').load('templates/responder-pregunta.html', responderPregunta));
@@ -84,13 +97,13 @@
     }
 
     function responderPregunta() {
-        $("#contenido-dinamico").on('submit', '#enviar-formulario-respuesta', function() {
+        $("#enviar-formulario-respuesta").submit(function() {
             var contenidoRespuesta = JSON.stringify({
                 "contenido": $('#respuesta').val(),
             });
             $.ajax({
                 type: 'POST',
-                url: urlBase + idElementoGuardado + '/respuestas',
+                url: urlBase + idPregunta + '/respuestas',
                 dataType: "json",
                 contentType: 'application/json',
                 data: contenidoRespuesta,
@@ -98,7 +111,7 @@
                     withCredentials: true
                 },
                 success: function(data) {
-                    localStorage.setItem('frontendPRnotificacion', 'Su respuesta ha sido guardada');
+                    localStorage.setItem('frontendPRnotificacion', 'Su pregunta ha sido guardada');
                     window.location = 'ver-pregunta.html';
                 },
                 error: function(data) {
@@ -119,6 +132,57 @@
                 },
             });
             return false;
+        });
+    }
+
+    function configurarModal() {
+        $contenidoPregunta.append($('<div id="modal" class="modal">').load('templates/eliminar-respuesta-modal.html', function() {
+            $('.eliminar-respuesta-modal').click(function() {
+                $("#eliminar-respuesta-aceptar").attr('data-id', $(this).attr('data-id'));
+            }).leanModal({
+                out_duration: 300,
+                ready: function() {},
+                complete: function() {
+                    $("#eliminar-respuesta-aceptar").removeAttr('data-id');
+                }
+            });
+        }));
+    }
+
+    function eliminarRespuesta() {
+        $('#contenido-pregunta').on('click', '#eliminar-respuesta-aceptar', function() {
+            var idRespuesta = $("#eliminar-respuesta-aceptar").attr('data-id');
+            $.ajax({
+                type: 'DELETE',
+                url: urlBase + idPregunta + '/respuestas/' + idRespuesta,
+                dataType: "json",
+                contentType: 'application/json',
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: function(data) {
+                    // localStorage.setItem('frontendPRnotificacion', 'Su respuesta ha sido eliminada');
+                    // window.location = 'ver-pregunta.html';
+                    $('.eliminar-respuesta-modal[data-id="' + idRespuesta + '"]').parent().parent().remove();
+                    Materialize.toast('Su respuesta fue eliminada', 3000, 'rounded');
+                },
+                error: function(data) {
+                    switch (data.status) {
+                        case 401:
+                            localStorage.setItem('frontendPRRedirect', 'ver-pregunta.html');
+                            if (localStorage.getItem('frontendPRSession')) {
+                                localStorage.removeItem('frontendPRSession');
+                                localStorage.setItem('frontendPRnotificacion', 'Su sesión ha expirado');
+                            } else {
+                                localStorage.setItem('frontendPRnotificacion', 'Es necesario iniciar sesión');
+                            }
+                            window.location = 'login.html';
+                            break;
+                        default:
+                            Materialize.toast(JSON.parse(data.responseText).error, 3000, 'rounded');
+                    }
+                },
+            });
         });
     }
 }(jQuery));
