@@ -16,7 +16,7 @@
                     '       <div class="col s12">' +
                     '           <div class="card grey lighten-4">' +
                     '               <div class="card-content grey-text text-darken-2">' +
-                    '                   <p class="truncate">' + pregunta.contenido + '</p>' +
+                    '                   <p class="truncate">' + pregunta.titulo + '</p>' +
                     '                </div>' +
                     '                <div class="card-action">' +
                     '                   <a class="guardar-id" data-tipo="pregunta" data-id="' + pregunta.id + '" href="ver-pregunta.html">Ver Pregunta</a>' +

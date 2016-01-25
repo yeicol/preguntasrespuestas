@@ -20,7 +20,7 @@
                 success: function(data) {
                     var html = '<div class="row">' +
                         '           <div class="col s12">' +
-                        '              <h4 class="orange-text">Ejemplo de título de pregunta</h4>' +
+                        '              <h4 class="orange-text">' + data.pregunta.titulo + '</h4>' +
                         '              <div class="divider"></div>' +
                         '              <div class="section">' +
                         '                  <p>' + data.pregunta.contenido + '</p>' +
@@ -29,7 +29,7 @@
                         '                  <div class="col s7 offset-s5 m6 offset-m6 l5 offset-l7">' +
                         '                      <div class="card grey lighten-3">' +
                         '                          <div class="card-content">' +
-                        '                              <span class="datos-pregunta">Preguntado cerca de Pereira</span>' +
+                        '                              <span class="datos-pregunta">Preguntado cerca de ' + data.pregunta.ciudad + '</span>' +
                         '                          </div>' +
                         '                      </div>' +
                         '                  </div>' +

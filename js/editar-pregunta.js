@@ -23,8 +23,12 @@
                             '   <form class="col s12" id="enviar-formulario-pregunta">' +
                             '       <div class="row">' +
                             '           <div class="input-field col s12">' +
-                            '               <textarea id="respuesta" name="respuesta" class="materialize-textarea">' + data.pregunta.contenido + '</textarea>' +
-                            //'               <label for="respuesta">Respuesta</label>' +
+                            '               <input name="titulo" id="titulo" type="text" class="validate" value="' + data.pregunta.titulo + '">' +
+                            '           </div>' +
+                            '       </div>' +
+                            '       <div class="row">' +
+                            '           <div class="input-field col s12">' +
+                            '               <textarea id="contenido" name="contenido" class="materialize-textarea">' + data.pregunta.contenido + '</textarea>' +
                             '           </div>' +
                             '       </div>' +
                             '       <button class="btn waves-effect waves-light" type="submit" name="action">Enviar' +
@@ -50,7 +54,8 @@
     function editarPregunta() {
         $("#contenido-dinamico").on('submit', '#enviar-formulario-pregunta', function() {
             var contenidoRespuesta = JSON.stringify({
-                "contenido": $('#respuesta').val(),
+                "titulo": $('#titulo').val(),
+                "contenido": $('#contenido').val(),
             });
             $.ajax({
                 type: 'PUT',
@@ -62,7 +67,7 @@
                     withCredentials: true
                 },
                 success: function(data) {
-                    localStorage.setItem('frontendPRnotificacion', 'Su respuesta ha sido guardada');
+                    localStorage.setItem('frontendPRnotificacion', 'Su contenido ha sido guardada');
                     window.location = 'editar-pregunta.html';
                 },
                 error: function(data) {
