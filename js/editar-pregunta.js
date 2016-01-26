@@ -6,10 +6,11 @@
 		var tipoElementoGuardado = window.localStorage.frontendPRTipo;
 		var idElementoGuardado = window.localStorage.frontendPRid;
 		var $contenidoPregunta = $("#contenido-pregunta");
+		var frontendPRSession = localStorage.getItem('frontendPRSession');
 		obtenerPregunta();
 
 		function obtenerPregunta() {
-				if (localStorage.getItem('frontendPRSession')) {
+				if (frontendPRSession) {
 						if ('pregunta' === tipoElementoGuardado && idElementoGuardado) {
 								$.ajax({
 										url: urlBase + idElementoGuardado,
@@ -26,14 +27,22 @@
 														editarPregunta();
 												}));
 										},
-										error: function () {
-
+										error: function (data) {
+												switch (data.status) {
+														case 404:
+																window.location = '404.html';
+																break;
+														case 500:
+																window.location = '500.html';
+														default:
+																Materialize.toast(JSON.parse(data.responseText).error, 3000, 'rounded');
+												}
 										}
 								});
 						}
 				} else {
 						localStorage.setItem('frontendPRRedirect', 'editar-pregunta.html');
-						localtorage.setItem('frontendPRnotificacion', 'Es necesario iniciar sesión');
+						localStorage.setItem('frontendPRnotificacion', 'Es necesario iniciar sesión');
 						window.location = 'login.html';
 				}
 
@@ -55,7 +64,7 @@
 										withCredentials: true
 								},
 								success: function (data) {
-										localStorage.setItem('frontendPRnotificacion', 'Su contenido ha sido guardada');
+										localStorage.setItem('frontendPRnotificacion', 'Su Pregunta ha sido guardada');
 										window.location = 'editar-pregunta.html';
 								},
 								error: function (data) {
@@ -70,6 +79,14 @@
 														}
 														window.location = 'login.html';
 														break;
+												case 403:
+														window.location = '403.html';
+														break;
+												case 404:
+														window.location = '404.html';
+														break;
+												case 500:
+														window.location = '500.html';
 												default:
 														Materialize.toast(JSON.parse(data.responseText).error, 3000, 'rounded');
 										}
