@@ -19,22 +19,21 @@
                         withCredentials: true
                     },
                     success: function(data) {
-                        html = '<h5>Editar pregunta</h5>' +
-                            '   <form class="col s12" id="enviar-formulario-pregunta">' +
-                            '       <div class="row">' +
-                            '           <div class="input-field col s12">' +
-                            '               <input name="titulo" id="titulo" type="text" class="validate" value="' + data.pregunta.titulo + '">' +
-                            '           </div>' +
-                            '       </div>' +
-                            '       <div class="row">' +
-                            '           <div class="input-field col s12">' +
-                            '               <textarea id="contenido" name="contenido" class="materialize-textarea">' + data.pregunta.contenido + '</textarea>' +
-                            '           </div>' +
-                            '       </div>' +
-                            '       <button class="btn waves-effect waves-light" type="submit" name="action">Enviar' +
-                            '           <i class="material-icons right">send</i>' +
-                            '       </button>' +
-                            '   </form>';
+                        html = '	<form class="col s12" id="enviar-formulario-pregunta">' +
+                            '			<div class="row">' +
+                            '				<div class="input-field col s12">' +
+                            '					<input name="titulo" id="titulo" type="text" class="validate" value="' + data.pregunta.titulo + '">' +
+                            '				</div>' +
+                            '			</div>' +
+                            '			<div class="row">' +
+                            '				<div class="input-field col s12">' +
+                            '					<textarea id="contenido" name="contenido" class="materialize-textarea">' + data.pregunta.contenido + '</textarea>' +
+                            '				</div>' +
+                            '			</div>' +
+                            '			<button class="btn waves-effect waves-light" type="submit" name="action">Enviar' +
+                            '				<i class="material-icons right">send</i>' +
+                            '			</button>' +
+                            '		</form>';
                         $contenidoPregunta.append(html);
                         editarPregunta();
 
