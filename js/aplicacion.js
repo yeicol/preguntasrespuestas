@@ -21,6 +21,7 @@
 		var frontendPRSession = parseInt(localStorage.getItem('frontendPRSession'), 10);
 		if (frontendPRSession) {
 			$('.nav-wrapper > ul > li > a[data-session="false"]').parent().hide();
+			$('a.guardar-id').attr('data-id', frontendPRSession);
 		} else {
 			$('.nav-wrapper > ul > li > a[data-session="true"]').parent().hide();
 		}
