@@ -15,23 +15,7 @@
         <div class="section no-pad-bot" id="index-banner">
             <div class="container" id="contenido-dinamico">
                 <div class="row center" id="contenedor-formulario">
-                    <form class="col s12" id="enviar-formulario">
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input name="titulo" id="titulo" type="text" class="validate">
-                                <label for="titulo">Título de la pregunta</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <textarea id="contenido" name="contenido" class="materialize-textarea"></textarea>
-                                <label for="contenido">Contenido</label>
-                            </div>
-                        </div>
-                        <button class="btn waves-effect waves-light" type="submit">Enviar
-                            <i class="material-icons right">send</i>
-                        </button>
-                    </form>
+                     <div class="template" data-template="formulario-pregunta.html"></div>
                 </div>
             </div>
         </div>
@@ -41,5 +25,4 @@
         <script src="js/agregar-pregunta.js"></script>
         <script src="js/aplicacion.js"></script>
     </body>
-
 </html>
