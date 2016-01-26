@@ -5,14 +5,24 @@
             if ($(this).attr('id') === 'navegacion') {
                 var titulo = $(this).attr('data-titulo');
                 $(this).load('templates/' + template, function() {
-                    $('.nav-wrapper > #titulo-pagina').innerHTML = titulo;
+                    $('.nav-wrapper > #titulo-pagina').html(titulo);
                     $('.nav-wrapper > ul > li > a:contains(' + titulo + ')').parent().addClass('active');
+                    menusVisibles();
                 });
             } else {
                 $(this).load('templates/' + template);
             }
         }
     });
+
+    function menusVisibles() {
+        var frontendPRSession = parseInt(localStorage.getItem('frontendPRSession'), 10);
+        if (frontendPRSession) {
+            $('.nav-wrapper > ul > li > a[data-session="false"]').parent().hide();
+        }else {
+            $('.nav-wrapper > ul > li > a[data-session="true"]').parent().hide();
+        }
+    }
 
     $("#contenido-dinamico").on('click', 'a.guardar-id', function(event) {
         event.preventDefault();
