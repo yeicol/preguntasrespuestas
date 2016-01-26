@@ -5,10 +5,8 @@
             if ($(this).attr('id') === 'navegacion') {
                 var titulo = $(this).attr('data-titulo');
                 $(this).load('templates/' + template, function() {
-                    var regexPath = /\/([a-z\-]+\.html)/;
-                    var path = regexPath.exec(window.location.href)[1];
                     $('.nav-wrapper > #titulo-pagina').innerHTML = titulo;
-                    $('.nav-wrapper > ul > li > a[href="' + path + '"]').parent().addClass('active');
+                    $('.nav-wrapper > ul > li > a:contains(' + titulo + ')').parent().addClass('active');
                 });
             } else {
                 $(this).load('templates/' + template);
