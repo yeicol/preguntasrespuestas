@@ -12,6 +12,7 @@
 												return $(this).text() === titulo;
 										}).parent().addClass('active');
 										menusVisibles();
+										iniciarSideNav();
 										salir();
 								});
 						} else {
@@ -34,6 +35,10 @@
 						$('.nav-wrapper > ul > li > a[data-session="true"]').parent().hide();
 				}
 				almacenarDatos();
+		}
+
+		function iniciarSideNav() {
+				$('.button-collapse').sideNav();
 		}
 
 		function almacenarDatos() {
