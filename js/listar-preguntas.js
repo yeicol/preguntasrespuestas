@@ -12,7 +12,7 @@
 		var frontendPRSession = localStorage.getItem('frontendPRSession');
 		var urlBase = 'http://preguntasrespuestas-yeicores72.rhcloud.com/api/';
 		if (frontendPRSession && tipoElementoGuardado === 'usuario' && idElementoGuardado) {
-				url = urlBase + 'usuarios/' + idElementoGuardado + 'preguntas';
+				url = urlBase + 'usuarios/' + idElementoGuardado + '/preguntas';
 		} else {
 				url = urlBase + 'preguntas';
 		}
