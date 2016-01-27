@@ -12,12 +12,18 @@
 												return $(this).text() === titulo;
 										}).parent().addClass('active');
 										menusVisibles();
+										salir();
 								});
 						} else {
 								$(this).load('templates/' + template);
 						}
 				}
 		});
+		var notificacion = localStorage.getItem('frontendPRnotificacion');
+		if (notificacion) {
+				Materialize.toast(notificacion, 3000, 'rounded');
+				localStorage.removeItem('frontendPRnotificacion');
+		}
 
 		function menusVisibles() {
 				var frontendPRSession = parseInt(localStorage.getItem('frontendPRSession'), 10);
@@ -40,9 +46,29 @@
 						window.location = $(this).attr('href');
 				});
 		}
-		var notificacion = localStorage.getItem('frontendPRnotificacion');
-		if (notificacion) {
-				Materialize.toast(notificacion, 3000, 'rounded');
-				localStorage.removeItem('frontendPRnotificacion');
+
+		function salir() {
+				var url = 'http://preguntasrespuestas-yeicores72.rhcloud.com/api/usuarios/salir';
+				$('.salir').click(function () {
+						$.ajax({
+								type: 'GET',
+								url: url,
+								dataType: "json",
+								contentType: 'application/json',
+								xhrFields: {
+										withCredentials: true
+								},
+								success: function (data, status, jqXHR) {
+										localStorage.clear()
+										localStorage.setItem('frontendPRnotificacion', 'Su sesión ha finalizado');
+
+										window.location = 'index.html';
+								},
+								error: function (data, status, jqXHR) {
+										Materialize.toast(JSON.parse(data.responseText).error, 3000, 'rounded');
+								}
+						});
+						return false;
+				});
 		}
 }(jQuery));
