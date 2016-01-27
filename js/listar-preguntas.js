@@ -24,8 +24,8 @@
 				success: function (data) {
 						$.each(data.preguntas, function (posicion, pregunta) {
 								if (pregunta.usuario_id === parseInt(frontendPRSession, 10)) {
-										opciones = '<a class="guardar-id" data-tipo="pregunta" data-id="' + pregunta.id + '" href="editar-pregunta.html">Editar Pregunta</a>' +
-														'          <a href="#modal" data-target="#modal" data-id="' + pregunta.id + '" class="secondary-content red-text eliminar-pregunta-modal modal-trigger">Eliminar Pregunta</a>';
+										opciones = '<a class="guardar-id orange-text" data-tipo="pregunta" data-id="' + pregunta.id + '" href="editar-pregunta.html"><i class="material-icons">mode_edit</i></a>' +
+														'          <a href="#modal" data-target="#modal" data-id="' + pregunta.id + '" class="secondary-content red-text eliminar-pregunta-modal modal-trigger"><i class="material-icons mdi-action-delete"></i></a>';
 								} else {
 										opciones = '';
 								}
@@ -36,7 +36,7 @@
 												'                   <p class="truncate">' + pregunta.titulo + '</p>' +
 												'                </div>' +
 												'                <div class="card-action">' +
-												'                   <a class="guardar-id" data-tipo="pregunta" data-id="' + pregunta.id + '" href="ver-pregunta.html">Ver Pregunta</a>' +
+												'                   <a class="guardar-id orange-text" data-tipo="pregunta" data-id="' + pregunta.id + '" href="ver-pregunta.html"><i class="material-icons mdi-action-visibility"></i></a>' +
 												'										' + opciones +
 												'               </div>' +
 												'           </div>' +
