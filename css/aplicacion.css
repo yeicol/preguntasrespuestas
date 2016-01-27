@@ -5,16 +5,24 @@
     margin: 0.3rem 0 0.3rem 0;
 }*/
 
-.background-claro {
-    background-color: #F9F9F9;
-}
 .respuesta {
-    background-color: #F5F5F5;
-    margin: 1rem 0;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+		background-color: #F5F5F5;
+		margin: 1rem 0;
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
 }
 .datos-pregunta {
-    font-size: 0.9rem;
-    font-weight: 400;
+		font-size: 0.9rem;
+		font-weight: 400;
+}
+
+body {
+		background-color: #F9F9F9;
+		display: flex;
+		min-height: 100vh;
+		flex-direction: column;
+}
+
+#index-banner {
+		flex: 1 0 auto;
 }
