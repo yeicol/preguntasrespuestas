@@ -1,27 +1,36 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-        <title>Listar Preguntas</title>
-        <!-- CSS  -->
-        <link href="css/material-icons.min.css" rel="stylesheet">
-        <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-    </head>
-    <body>
-        <div id="navegacion" class="template" data-template="navegacion.html" data-titulo="Preguntas"></div>
-        <div class="section no-pad-bot" id="index-banner">
-            <div class="container" id ="contenido-dinamico">
-                <div class="row">
-                    <div id="contenedor-preguntas">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="template" data-template="pie.html"></div>
-        <script src="js/jquery-2.2.0.min.js"></script>
-        <script src="js/materialize.min.js"></script>
-        <script src="js/listar-preguntas.js"></script>
-        <script src="js/aplicacion.js"></script>
-    </body>
+		<head>
+				<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+				<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+				<title>Listar Preguntas</title>
+				<link href="css/material-icons.min.css" rel="stylesheet">
+				<link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+		</head>
+		<body>
+				<div id="navegacion" class="template" data-template="navegacion.html" data-titulo="Preguntas"></div>
+				<div class="section no-pad-bot" id="index-banner">
+						<div class="container" id ="contenido-dinamico">
+								<div class="row">
+										<div id="contenedor-preguntas">
+										</div>
+								</div>
+						</div>
+				</div>
+				<div class="template" data-template="pie.html"></div>
+				<div id="modal" class="modal">
+						<div class="modal-content">
+								<h4>Eliminar Pregunta</h4>
+								<p>Esta Seguro que desea eliminar esta pregunta?</p>
+						</div>
+						<div class="modal-footer">
+								<a href="#" class="waves-effect waves-red btn-flat modal-action modal-close">Cancelar</a>
+								<a href="#" id="eliminar-pregunta-aceptar" class="waves-effect waves-green btn-flat modal-action modal-close">Aceptar</a>
+						</div>
+				</div>
+				<script src="js/jquery-2.2.0.min.js"></script>
+				<script src="js/materialize.min.js"></script>
+				<script src="js/listar-preguntas.js"></script>
+				<script src="js/aplicacion.js"></script>
+		</body>
 </html>
