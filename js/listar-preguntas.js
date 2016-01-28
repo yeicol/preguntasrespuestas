@@ -13,6 +13,8 @@
 		var urlBase = 'http://preguntasrespuestas-yeicores72.rhcloud.com/api/';
 		if (frontendPRSession && tipoElementoGuardado === 'usuario' && idElementoGuardado) {
 				url = urlBase + 'usuarios/' + idElementoGuardado + '/preguntas';
+				localStorage.removeItem('frontendPRid');
+				localStorage.removeItem('frontendPRTipo');
 		} else {
 				url = urlBase + 'preguntas';
 		}
@@ -22,7 +24,7 @@
 				type: 'GET',
 				dataType: 'json',
 				success: function (data) {
-						if(data.length > 0) {
+						if(data.length !== 0) {
 						$.each(data.preguntas, function (posicion, pregunta) {
 								if (pregunta.usuario_id === parseInt(frontendPRSession, 10)) {
 									opciones = '<a class="guardar-id orange-text" data-tipo="pregunta" data-id="' + pregunta.id + '" href="editar-pregunta.html"><i class="mdi-image-edit"></i></a>' +
