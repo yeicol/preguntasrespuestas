@@ -14,6 +14,14 @@
 										menusVisibles();
 										iniciarSideNav();
 										salir();
+										$('a.guardar-id').click(function (event) {
+												event.preventDefault();
+												var tipo = $(this).attr('data-tipo');
+												var id = $(this).attr('data-id');
+												localStorage.setItem('frontendPRTipo', tipo);
+												localStorage.setItem('frontendPRid', id);
+												window.location = $(this).attr('href');
+										});
 								});
 						} else {
 								$(this).load('templates/' + template);
@@ -34,23 +42,20 @@
 				} else {
 						$('.nav-wrapper > ul > li > a[data-session="true"]').parent().hide();
 				}
-				almacenarDatos();
 		}
 
 		function iniciarSideNav() {
 				$('.button-collapse').sideNav();
 		}
 
-		function almacenarDatos() {
-				$('a.guardar-id').click(function (event) {
-						event.preventDefault();
-						var tipo = $(this).attr('data-tipo');
-						var id = $(this).attr('data-id');
-						localStorage.setItem('frontendPRTipo', tipo);
-						localStorage.setItem('frontendPRid', id);
-						window.location = $(this).attr('href');
-				});
-		}
+		$('#contenido-dinamico').on('click', 'a.guardar-id', function (event) {
+				event.preventDefault();
+				var tipo = $(this).attr('data-tipo');
+				var id = $(this).attr('data-id');
+				localStorage.setItem('frontendPRTipo', tipo);
+				localStorage.setItem('frontendPRid', id);
+				window.location = $(this).attr('href');
+		});
 
 		function salir() {
 				var url = 'http://preguntasrespuestas-yeicores72.rhcloud.com/api/usuarios/salir';
