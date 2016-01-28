@@ -26,3 +26,6 @@ body {
 #index-banner {
 		flex: 1 0 auto;
 }
+#contenedor-preguntas .card-action > a > i {
+	font-size: 1.6rem;
+}
