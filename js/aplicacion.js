@@ -8,7 +8,7 @@
 								var titulo = $(this).attr('data-titulo');
 								$(this).load('templates/' + template, function () {
 										$('.nav-wrapper > #titulo-pagina').html(titulo);
-										$('.nav-wrapper > ul > li > a').filter(function () {
+										$('.nav-wrapper > ul > li > span').filter(function () {
 												return $(this).text() === titulo;
 										}).parent().addClass('active');
 										menusVisibles();
