@@ -60,10 +60,10 @@
 						},
 						success: function (data) {
 								var frontendPRSession = parseInt(localStorage.getItem('frontendPRSession'), 10);
-								var cantidadRespuestas = data.respuestas.length;
+								window.frontendPRCantidadRespuestas = data.respuestas.length;
 								var iniciarModal = false;
-								var multiplicidad = (cantidadRespuestas === 1) ? 'respuesta' : 'respuestas';
-								var html = '<h5>' + cantidadRespuestas + ' ' + multiplicidad + '</h5>' +
+								var textoRespuestas = getTextoRespuestas(window.frontendPRCantidadRespuestas);
+								var html = '<h5 id="cantidad-respuestas">' + textoRespuestas + '</h5>' +
 												'<div class="divider"></div>';
 								$.each(data.respuestas, function (posicion, respuesta) {
 										var usuarioRespuestaId = parseInt(respuesta.usuario_id);
@@ -165,6 +165,8 @@
 								},
 								success: function (data) {
 										$('.eliminar-respuesta-modal[data-id="' + idRespuesta + '"]').parent().parent().remove();
+										window.frontendPRCantidadRespuestas--;
+										$("#cantidad-respuestas").html(getTextoRespuestas(window.frontendPRCantidadRespuestas));
 										Materialize.toast('Su respuesta fue eliminada', 3000, 'rounded');
 								},
 								error: function (data) {
@@ -185,5 +187,9 @@
 								},
 						});
 				});
+		}
+		function getTextoRespuestas(cantidadRespuestas) {
+				var multiplicidad = (cantidadRespuestas === 1) ? 'respuesta' : 'respuestas';
+				return cantidadRespuestas + ' '  + multiplicidad;
 		}
 }(jQuery));
