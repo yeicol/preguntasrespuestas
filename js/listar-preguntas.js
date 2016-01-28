@@ -22,6 +22,7 @@
 				type: 'GET',
 				dataType: 'json',
 				success: function (data) {
+						if(data.length > 0) {
 						$.each(data.preguntas, function (posicion, pregunta) {
 								if (pregunta.usuario_id === parseInt(frontendPRSession, 10)) {
 									opciones = '<a class="guardar-id orange-text" data-tipo="pregunta" data-id="' + pregunta.id + '" href="editar-pregunta.html"><i class="mdi-image-edit"></i></a>' +
@@ -44,6 +45,10 @@
 												'   </div>';
 								$("#contenedor-preguntas").append(html);
 						});
+				}
+				else {
+						$("#contenedor-preguntas").append('<h4 class="orange-text center-align">No hay preguntas para mostrar</h4>');
+				}
 						configurarModal();
 				},
 				error: function (data) {
