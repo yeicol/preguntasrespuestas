@@ -1,5 +1,5 @@
 /**
- * Se encarga de autenticar al usuario
+ * Se encarga de enviar la solicitud de registro
  */
 (function($) {
     var url = 'http://preguntasrespuestas-yeicores72.rhcloud.com/api/usuarios';

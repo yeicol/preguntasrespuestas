@@ -1,6 +1,10 @@
 /* global Materialize */
 
 (function ($) {
+
+		/**
+			* Carga porciones de html dentro de la página
+			*/
 		$('.template').each(function () {
 				var template = $(this).attr('data-template');
 				if (template.length > 0) {
@@ -28,12 +32,20 @@
 						}
 				}
 		});
+
+		/*
+			* Muestra las notificaciones almacenadas en localestorage
+			*/
 		var notificacion = localStorage.getItem('frontendPRnotificacion');
 		if (notificacion) {
 				Materialize.toast(notificacion, 3000, 'rounded');
 				localStorage.removeItem('frontendPRnotificacion');
 		}
 
+		/**
+			*  Obtiene los menús visibles dependiendo si hay o no un usuario logueado
+			* @returns
+			*/
 		function menusVisibles() {
 				var frontendPRSession = parseInt(localStorage.getItem('frontendPRSession'), 10);
 				if (frontendPRSession) {
@@ -44,10 +56,18 @@
 				}
 		}
 
+		/**
+			*  Inicia la barra de navegación lateral para moviles
+			* @returns
+			*/
 		function iniciarSideNav() {
 				$('.button-collapse').sideNav();
 		}
 
+		/**
+			* Almacena en localstorage los id de los elementos
+			* que deben verse en otras páginas
+			*/
 		$('#contenido-dinamico').on('click', 'a.guardar-id', function (event) {
 				event.preventDefault();
 				var tipo = $(this).attr('data-tipo');
@@ -57,6 +77,10 @@
 				window.location = $(this).attr('href');
 		});
 
+		/**
+			* Finaliza la sesión de usuario
+			* @returns
+			*/
 		function salir() {
 				var url = 'http://preguntasrespuestas-yeicores72.rhcloud.com/api/usuarios/salir';
 				$('.salir').click(function () {

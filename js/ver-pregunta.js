@@ -1,5 +1,5 @@
 /**
-	* Se encarga de traer la información de las preguntas
+	* Trae la información de la pregunta
 	*/
 (function ($) {
 		var urlBase = 'http://preguntasrespuestas-yeicores72.rhcloud.com/api/preguntas/';
@@ -31,7 +31,7 @@
 														'                          <div class="card-content">' +
 														'                              <span class="datos-pregunta">' +
 														'																		Preguntado cerca de ' + data.pregunta.ciudad + '<br>' +
-														'																		' + data.pregunta.latitud + ',' +data.pregunta.longitud +
+														'																		' + data.pregunta.latitud + ',' + data.pregunta.longitud +
 														'															</span>' +
 														'                          </div>' +
 														'                      </div>' +
@@ -50,6 +50,10 @@
 				}
 		}
 
+		/**
+			* Obtiene las respuestas de una pregunta
+			* @returns
+			*/
 		function obtenerRespuestas() {
 				$.ajax({
 						url: urlBase + idPregunta + '/respuestas',
@@ -99,6 +103,10 @@
 				});
 		}
 
+		/**
+			* Envio de solicitud para responder la pregunta actual
+			* @returns {undefined}
+			*/
 		function responderPregunta() {
 				$("#enviar-formulario-respuesta").submit(function () {
 						var contenidoRespuesta = JSON.stringify({
@@ -138,6 +146,11 @@
 				});
 		}
 
+		/**
+			* Inicia el modal de confirmación para eliminar una pregunta
+			* Coloca el ID de la pregunta en el enlace de confirmación
+			* @returns
+			*/
 		function configurarModal() {
 				$contenidoPregunta.append($('<div id="modal" class="modal">').load('templates/eliminar-respuesta-modal.html', function () {
 						$('.eliminar-respuesta-modal').click(function () {
@@ -151,7 +164,10 @@
 						});
 				}));
 		}
-
+		/**
+			* Solicitud para eliminar una pregunta
+			* @returns
+			*/
 		function eliminarRespuesta() {
 				$('#contenido-pregunta').on('click', '#eliminar-respuesta-aceptar', function () {
 						var idRespuesta = $("#eliminar-respuesta-aceptar").attr('data-id');
@@ -190,6 +206,6 @@
 		}
 		function getTextoRespuestas(cantidadRespuestas) {
 				var multiplicidad = (cantidadRespuestas === 1) ? 'respuesta' : 'respuestas';
-				return cantidadRespuestas + ' '  + multiplicidad;
+				return cantidadRespuestas + ' ' + multiplicidad;
 		}
 }(jQuery));

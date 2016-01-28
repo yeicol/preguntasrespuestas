@@ -1,5 +1,5 @@
 /**
-	* Se encarga de traer la información de las preguntas
+	* Verifica si existe la pregunta a editar e imprime su información en el formulario
 	*/
 (function ($) {
 		var urlBase = 'http://preguntasrespuestas-yeicores72.rhcloud.com/api/preguntas/';
@@ -48,6 +48,10 @@
 
 		}
 
+		/**
+			* Envia la nueva información de la pregunta a editar
+			* @returns
+			*/
 		function editarPregunta() {
 				$("#enviar-formulario").submit(function () {
 						var contenidoRespuesta = JSON.stringify({
